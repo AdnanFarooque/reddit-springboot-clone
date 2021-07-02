@@ -12,14 +12,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.security.crypto.password.*;
+import org.springframework.security.web.authentication.*;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.*;
+
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsSerivce;
+    private final UserDetailsService userDetailsService;
+    private final Filter jwtAuthenticationFilter;
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
@@ -37,11 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .permitAll()
 //                .anyRequest()
 //                .authenticated();
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class);
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(userDetailsSerivce)
+        authenticationManagerBuilder.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
     @Bean

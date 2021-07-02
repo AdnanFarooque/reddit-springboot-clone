@@ -1,8 +1,6 @@
 package com.example.reddit.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

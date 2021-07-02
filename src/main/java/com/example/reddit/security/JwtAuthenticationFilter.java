@@ -2,10 +2,12 @@ package com.example.reddit.security;
 
 import com.example.reddit.service.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.context.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.web.authentication.*;
+import org.springframework.stereotype.*;
 import org.springframework.util.*;
 import org.springframework.web.filter.*;
 
@@ -13,6 +15,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtProvider jwtProvider;
