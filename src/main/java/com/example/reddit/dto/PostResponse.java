@@ -5,12 +5,13 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class SubredditDto {
+public class PostResponse {
     private Long id;
-    private String name;
+    private String postName;
+    private String url;
     private String description;
-    private String username;
+    private String userName;
+    private String subredditName;
     private String createdDate;
-    private Integer numberOfPosts;
+    private Integer voteCount;
 }
