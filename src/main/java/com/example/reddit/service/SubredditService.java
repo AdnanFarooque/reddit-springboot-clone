@@ -28,11 +28,7 @@ public class SubredditService {
     public SubredditDto save(SubredditDto subredditDto) {
         User currentUser = authService.getCurrentUser();
         Subreddit save = subredditRepository.save(subredditMapper.mapDtoToSubreddit(subredditDto, currentUser));
-        subredditDto.setId(save.getId());
-        subredditDto.setUsername(currentUser.getUsername());
-        subredditDto.setCreatedDate(save.getCreatedDate().toString());
-        subredditDto.setNumberOfPosts(0);
-        return subredditDto;
+        return subredditMapper.mapSubredditToDto(save);
     }
 
     @Transactional(readOnly = true)

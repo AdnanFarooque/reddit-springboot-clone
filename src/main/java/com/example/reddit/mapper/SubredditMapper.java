@@ -21,12 +21,14 @@ public interface SubredditMapper {
     SubredditDto mapSubredditToDto(Subreddit subreddit);
 
     default Integer mapPosts(List<Post> numberOfPosts) {
+        if(numberOfPosts == null) {
+            return 0;
+        }
         return numberOfPosts.size();
     }
 
 
-    @InheritInverseConfiguration
-    @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
+//    @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
     @Mapping(target = "user", source = "currentUser")
     @Mapping(target = "posts", ignore = true)
     Subreddit mapDtoToSubreddit(SubredditDto subredditDto, User currentUser);
