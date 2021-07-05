@@ -7,10 +7,10 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class SubredditDto {
-    private Long id;
+    private Long subredditId;
     private String name;
     private String description;
     private String username;
     private String createdDate;
-    private Integer numberOfPosts;
+    private Long numberOfPosts;
 }

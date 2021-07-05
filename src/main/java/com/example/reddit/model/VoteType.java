@@ -1,10 +1,25 @@
 package com.example.reddit.model;
 
+import com.example.reddit.exceptions.SpringRedditException;
+import java.util.Arrays;
+
 public enum VoteType {
-//    private static int direction;
+    UPVOTE(1L), DOWNVOTE(-1L);
 
-    UPVOTE(1), DOWNVOTE(1);
+    private static long direction;
 
-    VoteType(int direction) {
+
+    VoteType(Long direction) {
     }
-}
+
+    public static VoteType lookup(Long direction) {
+        return Arrays.stream(VoteType.values())
+                .filter(value -> value.getDirection().equals(direction))
+                .findAny()
+                .orElseThrow(() -> new SpringRedditException("Vote not found"));
+    }
+
+    public Long getDirection(){
+        return direction;
+    }
+ }

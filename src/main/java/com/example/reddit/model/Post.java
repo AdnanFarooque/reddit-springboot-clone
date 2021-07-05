@@ -32,12 +32,12 @@ public class Post {
     @Nullable
     @Lob
     private String description;
-    private Integer voteCount;
+    private Long voteCount;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
     private Instant createdDate;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "subredditId", referencedColumnName = "id")
+    @JoinColumn(name = "subredditId", referencedColumnName = "subredditId")
     private Subreddit subreddit;
 }

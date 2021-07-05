@@ -28,6 +28,7 @@ public class SubredditService {
     public SubredditDto save(SubredditDto subredditDto) {
         User currentUser = authService.getCurrentUser();
         Subreddit save = subredditRepository.save(subredditMapper.mapDtoToSubreddit(subredditDto, currentUser));
+
         return subredditMapper.mapSubredditToDto(save);
     }
 

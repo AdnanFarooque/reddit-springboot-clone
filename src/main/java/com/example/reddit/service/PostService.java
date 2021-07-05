@@ -42,7 +42,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostResponse getPost(Long id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new PostNotFoundException(id.toString()));
+                .orElseThrow(() -> new PostNotFoundException(id));
         return postMapper.mapToDto(post);
     }
 

@@ -21,7 +21,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Subreddit {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    private Long subredditId;
     @NotBlank(message = "Community name is required")
     private String name;
     @NotBlank(message = "Description is required")

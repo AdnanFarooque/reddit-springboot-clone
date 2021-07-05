@@ -3,13 +3,11 @@ package com.example.reddit.mapper;
 //import jdk.internal.loader.*;
 
 import com.example.reddit.dto.SubredditDto;
-
-import com.example.reddit.model.Subreddit;
 import com.example.reddit.model.Post;
+import com.example.reddit.model.Subreddit;
 import com.example.reddit.model.User;
-
-import org.mapstruct.*;
-import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -20,15 +18,15 @@ public interface SubredditMapper {
     @Mapping(target = "username", source = "user.username")
     SubredditDto mapSubredditToDto(Subreddit subreddit);
 
-    default Integer mapPosts(List<Post> numberOfPosts) {
+    default Long mapPosts(List<Post> numberOfPosts) {
         if(numberOfPosts == null) {
-            return 0;
+            return 0L;
         }
-        return numberOfPosts.size();
+        return (long) numberOfPosts.size();
     }
 
 
-//    @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
+    @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
     @Mapping(target = "user", source = "currentUser")
     @Mapping(target = "posts", ignore = true)
     Subreddit mapDtoToSubreddit(SubredditDto subredditDto, User currentUser);
