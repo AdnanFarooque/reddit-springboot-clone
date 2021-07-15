@@ -5,10 +5,12 @@ import com.example.reddit.dto.CommentResponse;
 import com.example.reddit.exceptions.PostNotFoundException;
 import com.example.reddit.exceptions.UserNotFoundException;
 import com.example.reddit.mapper.CommentMapper;
-import com.example.reddit.model.*;
+import com.example.reddit.model.Comment;
+import com.example.reddit.model.NotificationEmail;
+import com.example.reddit.model.Post;
+import com.example.reddit.model.User;
 import com.example.reddit.repository.CommentRepository;
 import com.example.reddit.repository.PostRepository;
-import com.example.reddit.repository.SubredditRepository;
 import com.example.reddit.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +38,8 @@ public class CommentService {
     @Transactional
     public CommentResponse save(CommentRequest commentRequest) {
         User currentUser = authService.getCurrentUser();
-        Post post = postRepository.findByPostName(commentRequest.getPostName())
-                .orElseThrow(() -> new PostNotFoundException(commentRequest.getPostName()));
+        Post post = postRepository.findByPostId(commentRequest.getPostId())
+                .orElseThrow(() -> new PostNotFoundException(commentRequest.getPostId()));
         Comment save = commentRepository.save(commentMapper.mapDtoToComment(commentRequest, post, currentUser));
 
         String message = mailContentBuilder.build(post.getUser().getUsername() +

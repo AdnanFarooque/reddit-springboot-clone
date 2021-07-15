@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class CommentResponse {
     private Long commentId;
     private String text;
-    private String postName;
+    private Long postId;
     private String createdDate;
-    private String userName;
+    private String username;
 }

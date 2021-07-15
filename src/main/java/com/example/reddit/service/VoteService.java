@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.example.reddit.model.VoteType.DOWNVOTE;
 import static com.example.reddit.model.VoteType.UPVOTE;
 
 @Service
@@ -28,12 +29,12 @@ public class VoteService {
                 .orElseThrow(() -> new PostNotFoundException(voteDto.getPostId()));
         Optional<Vote> voteByPostAndUser = voteRepository.findTopByPostAndUserOrderByVoteIdDesc(post, authService.getCurrentUser());
         if(voteByPostAndUser.isPresent() &&
-                voteByPostAndUser.get().getVoteType().equals(voteDto.getVoteType())) {
+                voteByPostAndUser.get().getVoteType().equals(voteDto.getVoteType()) && post.getVoteCount() != 0) {
             throw new SpringRedditException("You have already voted " + voteDto.getVoteType() + " for this post");
         }
         if(UPVOTE.equals(voteDto.getVoteType())) {
             post.setVoteCount(post.getVoteCount() + 1);
-        } else {
+        } else if(DOWNVOTE.equals(voteDto.getVoteType())){
             post.setVoteCount(post.getVoteCount() - 1);
         }
         voteRepository.save(mapToVote(voteDto, post));

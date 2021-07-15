@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/subreddit")
+@RequestMapping("/api/subreddit/")
 @AllArgsConstructor
 @Slf4j
 public class SubredditController {
     private final SubredditService subredditService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<SubredditDto> createSubreddit(@RequestBody SubredditDto subredditDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(subredditService.save(subredditDto));
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<SubredditDto>> getAllSubreddits() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(subredditService.getAll());

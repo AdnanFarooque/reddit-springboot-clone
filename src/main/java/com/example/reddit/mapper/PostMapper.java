@@ -4,14 +4,15 @@ import com.example.reddit.dto.PostRequest;
 import com.example.reddit.dto.PostResponse;
 import com.example.reddit.model.Post;
 import com.example.reddit.model.Subreddit;
+import com.example.reddit.model.User;
 import com.example.reddit.repository.CommentRepository;
 import com.example.reddit.repository.VoteRepository;
 import com.example.reddit.service.AuthService;
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.github.marlonlom.utilities.timeago.TimeAgo;
 
 @Mapper(componentModel = "spring")
 public abstract class PostMapper {
@@ -24,10 +25,11 @@ public abstract class PostMapper {
     private AuthService authService;
 
     @Mapping(target = "createdDate", expression = "java(java.time.Instant.now())")
-    @Mapping(target = "description", source = "postRequest.description")
+    @Mapping(target = "user", source = "user")
+    @Mapping(target = "description", source = "postRequest.description") // too many sources for description
     @Mapping(target = "subreddit", source = "subreddit")
     @Mapping(target = "voteCount", constant = "0L")
-    public abstract Post mapDtoToPost(PostRequest postRequest, Subreddit subreddit);
+    public abstract Post mapDtoToPost(PostRequest postRequest, Subreddit subreddit, User user);
 
     @InheritInverseConfiguration
     @Mapping(target = "subredditName", source = "subreddit.name")

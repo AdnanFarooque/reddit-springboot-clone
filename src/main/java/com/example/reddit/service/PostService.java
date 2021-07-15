@@ -35,7 +35,8 @@ public class PostService {
     public PostResponse save(PostRequest postRequest) {
         Subreddit subreddit = subredditRepository.findByName(postRequest.getSubredditName())
                 .orElseThrow(() -> new SubredditNotFoundException(postRequest.getSubredditName()));
-        Post save = postRepository.save(postMapper.mapDtoToPost(postRequest, subreddit));
+        User user = authService.getCurrentUser();
+        Post save = postRepository.save(postMapper.mapDtoToPost(postRequest, subreddit, user));
         return postMapper.mapToDto(save);
     }
 
